@@ -1,0 +1,41 @@
+Mobile-P2kMoto
+
+This module uses the p2kmoto library to interface with Motorola Mobile
+phones using an USB cable.  It allows access to the filesystem as well
+as accessing the SEEM record.
+
+=========================
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+This module is a wrapper around the p2kmoto library
+(http://moto4lin.sourceforge.net/). It is known to work under
+Linux. The library works under Windows as well, but the module has not
+been tested there.
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2006-2007 by Mattia Barbon
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
