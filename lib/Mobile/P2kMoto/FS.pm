@@ -95,6 +95,10 @@ Removes the given directory.  The directory must be empty.
 
 Returns the free space on the volume (in bytes).
 
+=head1 SEE ALSO
+
+L<Mobile::P2kMoto>, L<Mobile::P2kMoto::FS::FileInfo>
+
 =cut
 
 1;

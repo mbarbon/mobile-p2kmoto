@@ -39,6 +39,10 @@ Returns an integer representing the owner of the file.
 
 Returns an integer representing the file attributes.
 
+=head1 SEE ALSO
+
+L<Mobile::P2kMoto>, L<Mobile::P2kMoto::FS>
+
 =cut
 
 1;

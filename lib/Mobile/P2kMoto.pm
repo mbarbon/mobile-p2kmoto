@@ -4,7 +4,7 @@ use 5.006;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 our $AUTOLOAD;
 
 sub AUTOLOAD {
@@ -161,6 +161,10 @@ Sets the product ID used by p2kmoto for the P2K interface.
   my $id = getP2Kvendor();
 
 Sets the vendor ID used by p2kmoto for the P2K interface.
+
+=head1 SEE ALSO
+
+L<Mobile::P2kMoto::FS>, L<Mobile::P2kMoto::FS::FileInfo>
 
 =head1 AUTHOR
 
