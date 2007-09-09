@@ -4,6 +4,7 @@ Revision history for Perl extension Mobile::P2kMoto.
 	- Added easy_openPhone() as a simplified interface
 	  to (auto)configuration, P2K mode setting and opening
 	  the phone.
+	- Fixed open() and read() to actually work.
 
 0.01  Tue Jun 26 21:10:14 CEST 2007
 	- Initial release

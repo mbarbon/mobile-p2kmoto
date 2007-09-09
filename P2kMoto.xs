@@ -197,7 +197,6 @@ int
 p2k_openPhone(timeout)
     int timeout
 
-
 int
 p2k_reboot()
 
@@ -287,13 +286,35 @@ p2k_FSAC_getVolumeFreeSpace(volume)
 
 int
 p2k_FSAC_open(fname, attr)
-    char* fname
+    SV* fname
     unsigned char attr
+  PREINIT:
+    STRLEN len;
+    char* name;
+  CODE:
+    name = SvPV(fname, len);
+    name[len] = 0;
+    RETVAL = p2k_FSAC_open(name, attr);
+  OUTPUT: RETVAL
 
 int
 p2k_FSAC_read(buf, size)
-    unsigned char* buf
+    SV* buf
     int size
+  CODE:
+    SvUPGRADE(buf , SVt_PV);
+    SvPOK_only(buf);
+    char* buffer = SvGROW(buf, size + 1);
+    RETVAL = p2k_FSAC_read(buffer, size);
+    /* p2kmoto reading interface is bad */
+    if( RETVAL == 0 ) {
+        buffer[size] = 0;
+        SvCUR_set(buf, size);
+    } else {
+        buffer[0] = 0;
+        SvCUR_set(buf, 0);
+    }
+  OUTPUT: RETVAL
 
 int
 p2k_FSAC_removeDir(dirname)
