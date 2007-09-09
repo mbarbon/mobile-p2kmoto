@@ -165,7 +165,7 @@ Sets the vendor/product ID used by p2kmoto for the AT interface.
 
 =head2 setP2Kconfig
 
-  setATconfig( 0x22b8, 0x4901 );
+  setP2Kconfig( 0x22b8, 0x4901 );
 
 Sets the vendor/product ID used by p2kmoto for the P2K interface.
 
