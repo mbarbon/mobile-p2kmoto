@@ -37,9 +37,11 @@ p2k_perl_onFile( struct p2k_fileInfo file )
     ENTER;
     SAVETMPS;
 
+    struct p2k_fileInfo* copy = malloc( sizeof(struct p2k_fileInfo) );
+    memcpy( copy, &file, sizeof(struct p2k_fileInfo) );
     SV* info = sv_2mortal( sv_setref_pv( newSViv( 0 ),
                                          "Mobile::P2kMoto::FS::FileInfo",
-                                         &file ) );
+                                         copy ) );
 
     PUSHMARK( SP );
     XPUSHs( info );
@@ -104,6 +106,11 @@ struct p2k_perl_Midlet_v360 {
 #define p2k_perl_Midlet p2k_perl_Midlet_v360
 
 MODULE = Mobile::P2kMoto PACKAGE = Mobile::P2kMoto::FS::FileInfo
+
+void
+Mobile_P2kMoto_FS_FileInfo::DESTROY()
+  CODE:
+    free( THIS );
 
 int
 Mobile_P2kMoto_FS_FileInfo::id()
