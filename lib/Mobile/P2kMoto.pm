@@ -26,6 +26,34 @@ XSLoader::load('Mobile::P2kMoto', $VERSION);
 
 init();
 
+sub easy_openPhone {
+    my( %args ) = @_;
+
+    $args{timeout} ||= 3000;
+    $args{device}  ||= '/dev/ttyACM0';
+
+    Mobile::P2kMoto::setACMdevice( $args{device} );
+    if( $args{at_config} && $args{p2k_config} ) {
+        Mobile::P2kMoto::setATconfig( @{$args{at_config}} );
+        Mobile::P2kMoto::setP2Kconfig( @{$args{p2k_config}} );
+    } else {
+        Mobile::P2kMoto::detectPhone();
+    }
+
+    my $state = Mobile::P2kMoto::findPhone();
+
+    if( $state == Mobile::P2kMoto::P2K_PHONE_NONE() ) {
+        die "No phone found";
+    } elsif( $state == Mobile::P2kMoto::P2K_PHONE_AT() ) {
+        Mobile::P2kMoto::setP2Kmode( $args{timeout} )
+            and die "Failed to set P2K mode";
+    } elsif( $state == Mobile::P2kMoto::P2K_PHONE_P2K() ) {
+        # do nothing, all is well
+    }
+
+    return Mobile::P2kMoto::openPhone( $args{timeout} );
+}
+
 1;
 
 __END__
@@ -39,19 +67,10 @@ Mobile::P2kMoto - interface with Motorola P2K phones
     use Mobile::P2kMoto;
     use constant TIMEOUT => 3000;
 
-    Mobile::P2kMoto::setACMdevice( '/dev/ttyACM0' );
-    Mobile::P2kMoto::detectPhone();
+    Mobile::P2kMoto::easy_openPhone( device  => '/dev/ttyACM0',
+                                     timeout => TIMEOUT,
+                                     );
 
-    my $state = Mobile::P2kMoto::findPhone();
-    if( $state == Mobile::P2kMoto::P2K_PHONE_NONE ) {
-        die "No phone found";
-    } elsif( $state == Mobile::P2kMoto::P2K_PHONE_AT ) {
-        Mobile::P2kMoto::setP2Kmode( TIMEOUT );
-    } elsif( $state == Mobile::P2kMoto::P2K_PHONE_P2K ) {
-        # do nothing, all is well
-    }
-
-    Mobile::P2kMoto::openPhone( TIMEOUT );
     Mobile::P2kMoto::FS::searchRequest( '/a/*.wav' );
     Mobile::P2kMoto::FS::fileList( sub { print $_[0]->name, "\n" } );
 
@@ -96,6 +115,24 @@ before accessing the phone via C<openPhone()>.
 
 Connects to the phone.  The phone must be in P2K mode before
 performing this action.
+
+=head2 easy_openPhone
+
+  my $rv = easy_openPhone( device     => '/dev/ttyACM0',
+                           timeout    => 3000,
+                           p2k_config => [ 0x1, 0x2 ],
+                           acm_config => [ 0x3, 0x4 ],
+                           );
+
+A simplified interface to configuring/detecting/opening the phone:
+C<device> defaults to C<'/dev/ttyACM0'> and C<timeout> to C<3000>;
+C<p2k_config> and C<acm_config> are optional.
+
+This function performa several actions: first it sets the ACM device;
+if C<p2k_config> and C<acm_config> are specified, calls
+C<setP2Kconfig> and C<setACMconfig>, otherwise calls C<detectPhone>;
+switched the phone to P2K mode if it isn't already; calls
+C<openPhone>.
 
 =head2 closePhone
 
