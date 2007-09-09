@@ -3,6 +3,27 @@ package Mobile::P2kMoto::FS;
 use strict;
 use warnings;
 
+sub dir {
+    my( $pattern ) = @_;
+    my( $search ) = $pattern;
+
+    my $cb;
+    my @files;
+
+    if( $search =~ m{^(?:/[a-zA-Z]/)?[^/]*$} ) {
+        $cb = sub { push @files, $_[0] };
+    } else {
+        $search =~ s{^(/[a-zA-Z]/)?.*/}{$1};
+        $pattern =~ s{\*}{.*}g;
+        $cb = sub { push @files, $_[0] if $_[0]->name =~ $pattern };
+    }
+
+    return () if Mobile::P2kMoto::FS::searchRequest( $search ) < 0;
+    return () if Mobile::P2kMoto::FS::fileList( $cb ) < 0;
+
+    return @files;
+}
+
 =head1 NAME
 
 Mobile::P2kMoto::FS - filesystem access for Motorola P2K phones
@@ -67,6 +88,8 @@ Performs a search in the filesystem.  The results can be read using
 C<fileList()>.  Note that the search is always recursive.  Returns the
 number of files matching the request.
 
+Valid patterns are F<*.foo> and F</c/*.foo>.
+
 =head2 fileList
 
   my $callback = sub { print $_[0]->name };
@@ -76,6 +99,14 @@ Calls C<$callback> for every file in the file list.  If
 C<searchRequest()> was not called, lists every file, otherwise only the
 ones matched by the last C<searchRequest()>.  The first and only
 argument to the callback is a L<Mobile::P2kMoto::FS::FileInfo> object.
+
+=head2 dir
+
+  my @fileinfo = dir( "/a/*.mp3" );
+
+Internally does a call to C<searchRequest> and C<fileList> and returns
+a list of L<Mobile::P2kMoto::FS::FileInfo> as result.  Will try to handle
+patterns more complicated than those supported by plain C<searchRequest>.
 
 =head2 createDir
 

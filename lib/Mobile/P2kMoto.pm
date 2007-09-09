@@ -4,6 +4,9 @@ use 5.006;
 use strict;
 use warnings;
 
+use Mobile::P2kMoto::FS;
+use Mobile::P2kMoto::FS::FileInfo;
+
 our $VERSION = '0.02';
 our $AUTOLOAD;
 
