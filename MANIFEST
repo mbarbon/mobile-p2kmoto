@@ -12,6 +12,7 @@ fallback/const-xs.inc
 lib/Mobile/P2kMoto.pm
 lib/Mobile/P2kMoto/Constants.pm
 lib/Mobile/P2kMoto/FS.pm
+lib/Mobile/P2kMoto/FS/FH.pm
 lib/Mobile/P2kMoto/FS/FileInfo.pm
 ppport.h
 t/001_load.t

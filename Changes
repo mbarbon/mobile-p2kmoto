@@ -7,6 +7,7 @@ Revision history for Perl extension Mobile::P2kMoto.
 	- Added dir() as a simplified and more powerful interface to
 	  searchRequest/fileList.
 	- Fixed open() and read() to actually work.
+	- Added a simplified interface for opening/reading/writing files.
 
 0.01  Tue Jun 26 21:10:14 CEST 2007
 	- Initial release

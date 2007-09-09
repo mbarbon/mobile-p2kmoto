@@ -285,7 +285,7 @@ p2k_FSAC_getVolumeFreeSpace(volume)
 #endif
 
 int
-p2k_FSAC_open(fname, attr)
+p2k_FSAC__open(fname, attr)
     SV* fname
     unsigned char attr
   PREINIT:
