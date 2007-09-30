@@ -10,6 +10,12 @@ Mobile::P2kMoto::FS::FH - internal class used by Mobile::P2kMoto::FS::open
 
 =cut
 
+sub DESTROY {
+    my( $self ) = @_;
+
+    CLOSE( $self );
+}
+
 sub TIEHANDLE {
     my( $class, $size ) = @_;
     my $self = bless { size => $size, offset => 0 }, $class;
@@ -75,6 +81,8 @@ sub WRITE {
 
 sub CLOSE {
     my( $self ) = @_;
+
+    return unless exists $self->{offset};
 
     delete $self->{offset};
     delete $self->{size};
