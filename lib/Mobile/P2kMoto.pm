@@ -7,7 +7,7 @@ use warnings;
 use Mobile::P2kMoto::FS;
 use Mobile::P2kMoto::FS::FileInfo;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 our $AUTOLOAD;
 
 sub AUTOLOAD {
