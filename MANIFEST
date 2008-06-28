@@ -10,6 +10,7 @@ example/fs.pl
 example/p2kclient.pl
 fallback/const-c.inc
 fallback/const-xs.inc
+inc/Devel/CheckLib.pm
 lib/Mobile/P2kMoto.pm
 lib/Mobile/P2kMoto/Constants.pm
 lib/Mobile/P2kMoto/FS.pm

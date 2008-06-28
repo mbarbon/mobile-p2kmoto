@@ -2,7 +2,14 @@
 
 use strict;
 use warnings;
+use lib 'inc';
+
 use ExtUtils::MakeMaker;
+use Devel::CheckLib;
+
+my $check_lib = !grep /--no-check-lib/, @ARGV;
+check_lib_or_exit( lib => 'p2kmoto', header => 'p2kmoto.h' )
+    if $check_lib;
 
 eval {
     require ExtUtils::MY_Metafile;
